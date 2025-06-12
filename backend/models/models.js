@@ -8,6 +8,13 @@ const userschema = new mongoose.Schema({
 })
 
 
+const adminschema = new mongoose.Schema({
+    name : String,
+    email : String,
+    password : String
+})
+
+
 const todoschema = new mongoose.Schema({
     todo : String
 })
@@ -15,9 +22,12 @@ const todoschema = new mongoose.Schema({
 
 const usermodel = mongoose.model("user", userschema)
 const todomodel = mongoose.model("todo", todoschema)
+const adminmodel = mongoose.model("admin",adminschema)
 
 
 module.exports = {
     usermodel,
-    todomodel
+    todomodel,
+    adminmodel
+    
 }

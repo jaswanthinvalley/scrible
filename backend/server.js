@@ -1,7 +1,10 @@
 const express = require("express");
 const Db = require("./Db");
 const bcrypt = require("bcrypt")
-const { usermodel } = require("./modles/models");
+const { usermodel } = require("./models/models")
+const { userrouter } = require("./routes/userroute");
+const { adminrouter } = require("./routes/adminroute");
+
 const dotenv = require("dotenv").config();
 
 const app = express();
@@ -14,6 +17,11 @@ async function startServer() {
     app.listen(PORT, () =>
       console.log(`the server is running in the port : ${PORT}`)
     );
+
+
+
+    app.use('/api/v1',userrouter)
+    app.use("/api/v1",adminrouter)
 
     app.get("/api/todo", (request, respone) =>
       respone.json({ message: "welcome to the application" })
@@ -35,20 +43,8 @@ async function startServer() {
     app.get("/create-user",((request,response) => response.json({ message : "welocome to the create user end point"})))
 
 
-      app.post("/create-user",async(request,response) => {
-      const {name,email,password} = await request.body
-      const salt  = 10
-      const hashedpassword = await bcrypt.hash(password,salt)
 
-      const createuser = await usermodel.create({
-        name,
-        email,
-        password : hashedpassword
-      })
-      response.send(createuser)
-
-
-    } )
+    app.use('/api/v1',userrouter)
 
 
 
